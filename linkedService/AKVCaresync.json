@@ -1,0 +1,10 @@
+{
+	"name": "AKVCaresync",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://caresync-manvar.vault.azure.net/"
+		}
+	}
+}
