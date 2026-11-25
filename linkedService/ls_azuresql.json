@@ -1,0 +1,24 @@
+{
+	"name": "ls_azuresql",
+	"properties": {
+		"description": "Azure SQL",
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "manvar.database.windows.net",
+			"database": "caresync",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "adminmanvar",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AKVCaresync",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "secret-azuresql-pwd"
+			}
+		}
+	}
+}
