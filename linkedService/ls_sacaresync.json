@@ -1,0 +1,10 @@
+{
+	"name": "ls_sacaresync",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://sgcaresyncmanvar.dfs.core.windows.net/"
+		}
+	}
+}
