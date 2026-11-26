@@ -5,6 +5,16 @@
 			"referenceName": "ls_sacaresync",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"container": {
+				"type": "string",
+				"defaultValue": "landing"
+			},
+			"folder": {
+				"type": "string",
+				"defaultValue": "test"
+			}
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
