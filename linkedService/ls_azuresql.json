@@ -5,12 +5,12 @@
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"server": "manvar.database.windows.net",
+			"server": "caresyncserver83.database.windows.net",
 			"database": "caresync",
 			"encrypt": "mandatory",
 			"trustServerCertificate": false,
 			"authenticationType": "SQL",
-			"userName": "adminmanvar",
+			"userName": "admincaresync",
 			"password": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
