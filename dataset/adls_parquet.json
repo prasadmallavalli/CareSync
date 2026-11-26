@@ -1,0 +1,25 @@
+{
+	"name": "adls_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sacaresync",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"container": "landing",
+				"folder": {
+					"value": "@concat(\nactivity('Read Table Data').output.firstRow.source_system, '/', \nactivity('RTD').output.firstRow.Source_table_name, '/', \nvariables('start_time'))",
+					"type": "Expression"
+				}
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
