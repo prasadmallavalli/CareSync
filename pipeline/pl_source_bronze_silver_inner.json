@@ -31,7 +31,7 @@
 				}
 			},
 			{
-				"name": "for folder nam",
+				"name": "starttime",
 				"type": "SetVariable",
 				"dependsOn": [],
 				"policy": {
@@ -48,7 +48,7 @@
 				}
 			},
 			{
-				"name": "cpPostgreToAsql",
+				"name": "cpPostgreToADLS",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -58,7 +58,7 @@
 						]
 					},
 					{
-						"activity": "for folder nam",
+						"activity": "starttime",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -109,7 +109,14 @@
 				"outputs": [
 					{
 						"referenceName": "Parquet1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "landing",
+							"folder": {
+								"value": "@concat(\n    activity('Read Tables Data').output.firstRow.source_system,\n    '/',\n    activity('Read Tables Data').output.firstRow.source_table_name,\n    '/',\n    variables('start_time')\n)",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
