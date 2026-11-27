@@ -147,7 +147,7 @@
 							"type": "Expression"
 						},
 						"table_name": {
-							"value": "@activity('Read Tables Data').output.firstRow.table_name",
+							"value": "@activity('Read Tables Data').output.firstRow.bronze_table_name",
 							"type": "Expression"
 						},
 						"landing_timestamp": {
@@ -181,10 +181,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/ws_caresync_adb/caresync-adbrepo/Landing_to_Bronze",
+					"notebookPath": "/ws_caresync_adb/caresync-adbrepo/Bronze_to_Silver",
 					"baseParameters": {
 						"table_name": {
-							"value": "@activity('Read Tables Data').output.firstRow.table_name",
+							"value": "@activity('Read Tables Data').output.firstRow.silver_table_name",
 							"type": "Expression"
 						},
 						"landing_timestamp": {
@@ -197,12 +197,52 @@
 					"referenceName": "ls_adb",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "on_success",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "bronze_to_silver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_azuresql",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": {
+								"value": "update ctrl.audit_log\nSet status = 'SUCCESS'\n, end_time = SYSUTCDATETIME(), \nrecords_written = @{activity('bronze_to_silver').output.runOutput}\nWhere adf_run_id = '@{pipeline().parameters.adf_run_id}' and table_id = '@{pipeline().parameters.table_id}'\n",
+								"type": "Expression"
+							}
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
 			}
 		],
 		"parameters": {
 			"table_id": {
 				"type": "string",
 				"defaultValue": "1"
+			},
+			"adf_run_id": {
+				"type": "string",
+				"defaultValue": "a1"
 			}
 		},
 		"variables": {
